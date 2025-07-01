@@ -1,0 +1,19 @@
+data:
+  path: "data/hmeq.csv"
+model:
+  type: "GradientBoosting"
+  params:
+    learning_rate: 0.1
+    n_estimators: 600
+    max_depth: 4
+    min_samples_leaf: 1
+    min_samples_split: 2
+    max_leaf_nodes: 500
+preprocessing:
+  test_size: 0.3
+  random_state: 42
+serialization:
+  output_dir: "data/hmeqModels/GradientBoosting"
+pzmm:
+  host: "demo.sas.com"
+  protocol: "http"
