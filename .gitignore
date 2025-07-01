@@ -156,3 +156,6 @@ config.json
 .Trashes
 ehthumbs.db
 Thumbs.db 
+
+# Data files
+data/hmeqModels/

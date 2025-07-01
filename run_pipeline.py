@@ -1,14 +1,17 @@
 import yaml
-from src.data_loading import load_data
-from src.preprocessing import split_and_impute
-from src.training import train_gbc
-from src.evaluation import evaluate
-from src.serialization import serialize_model
-from src.import_model import import_to_model_manager
+import argparse
 
-def main():
+from src.data_loading    import load_data
+from src.preprocessing  import split_and_impute
+from src.training       import train_gbc
+from src.evaluation     import evaluate
+from src.serialization  import serialize_model
+from src.import_model   import import_to_model_manager
+
+def main(skip_import: bool):
     # 1. load config
     cfg = yaml.safe_load(open("configs/params.yaml"))
+
     # 2. data
     df = load_data(cfg["data"]["path"])
     preds = ["LOAN","MORTDUE","VALUE","YOJ","DEROG","DELINQ","CLAGE","NINQ","CLNO","DEBTINC"]
@@ -17,28 +20,44 @@ def main():
         cfg["preprocessing"]["test_size"],
         cfg["preprocessing"]["random_state"]
     )
+
     # 3. train
     model = train_gbc(x_train, y_train, cfg["model"]["params"])
-    # 4. eval
+
+    # 4. evaluate
     y_pred, y_proba = evaluate(model, x_test, y_test)
+
     # 5. serialize
     serialize_model(
-        model, preds, df,
+        model,
+        preds,
+        df,
         cfg["serialization"]["output_dir"],
         cfg["model"]["type"]
     )
-    # 6. import
-    import_to_model_manager(
-        input_data=df[preds],
-        model_prefix=cfg["model"]["type"],
-        project="HMEQModels",
-        serialization_path=cfg["serialization"]["output_dir"],
-        predict_method=[model.predict_proba, [int,int]],
-        score_metrics=["EM_CLASSIFICATION","EM_EVENTPROBABILITY"],
-        missing_values=True,
-        host=cfg["pzmm"]["host"],
-        protocol=cfg["pzmm"]["protocol"]
-    )
+
+    # 6. (optionally) import
+    if skip_import:
+        print("ℹ️  Dry run: skipping SAS Model Manager import")
+    else:
+        import_to_model_manager(
+            input_data=df[preds],
+            model_prefix=cfg["model"]["type"],
+            project="HMEQModels",
+            serialization_path=cfg["serialization"]["output_dir"],
+            predict_method=[model.predict_proba, [int, int]],
+            score_metrics=["EM_CLASSIFICATION","EM_EVENTPROBABILITY"],
+            missing_values=True,
+            host=cfg["pzmm"]["host"],
+            protocol=cfg["pzmm"]["protocol"]
+        )
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--skip-import",
+        action="store_true",
+        help="Run everything up through serialization, but skip the SAS import step"
+    )
+    args = parser.parse_args()
+    main(skip_import=args.skip_import)
