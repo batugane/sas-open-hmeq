@@ -1,8 +1,1 @@
-pandas
-numpy
-scikit-learn
-matplotlib
-pyyaml
-sasctl[all]
-swat
-python-dotenv
+ 
