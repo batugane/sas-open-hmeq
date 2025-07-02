@@ -1,5 +1,6 @@
 import yaml
 import argparse
+import logging
 
 from src.data_loading    import load_data
 from src.preprocessing  import split_and_impute
@@ -7,6 +8,9 @@ from src.training       import train_gbc
 from src.evaluation     import evaluate
 from src.serialization  import serialize_model
 from src.import_model   import import_to_model_manager
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def main(skip_import: bool):
     # 1. load config
@@ -38,7 +42,7 @@ def main(skip_import: bool):
 
     # 6. (optionally) import
     if skip_import:
-        print("ℹ️  Dry run: skipping SAS Model Manager import")
+        logger.info("ℹ️  Dry run: skipping SAS Model Manager import")
     else:
         import_to_model_manager(
             input_data=df[preds],

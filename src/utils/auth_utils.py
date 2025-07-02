@@ -3,9 +3,13 @@ import os
 import base64
 import swat
 from dotenv import load_dotenv
+import logging
 
 # Load environment variables from .env file
 load_dotenv()
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # === Configuration ===
 CLIENT_ID = os.getenv("SAS_CLIENT_ID", "api.client")
@@ -33,8 +37,8 @@ def load_token(filename: str) -> str:
 # === Access Token Generation ===
 def generate_access_token():
     auth_url = f"{BASE_URL}/SASLogon/oauth/authorize?client_id={CLIENT_ID}&response_type=code"
-    print("* Open in incognito:", auth_url)
-    print("* Authenticate with SAS credentials, check all boxes, and copy the resulting short code.")
+    logger.info("* Open in incognito: %s", auth_url)
+    logger.info("* Authenticate with SAS credentials, check all boxes, and copy the resulting short code.")
     code = input("Paste the authorization code: ").strip()
 
     token_url = f"{BASE_URL}/SASLogon/oauth/token#authorization_code"
@@ -45,16 +49,19 @@ def generate_access_token():
         'Authorization': "Basic " + _get_base64_auth_string()
     }
 
-    response = requests.post(token_url, headers=headers, data=payload, verify=False)
-    data = response.json()
-
-    access_token = data['access_token']
-    refresh_token = data['refresh_token']
-
-    save_token(access_token, 'access_token.txt')
-    save_token(refresh_token, 'refresh_token.txt')
-    print("✔ Access and refresh tokens saved.")
-    return access_token
+    try:
+        response = requests.post(token_url, headers=headers, data=payload, verify=False)
+        response.raise_for_status()
+        data = response.json()
+        access_token = data['access_token']
+        refresh_token = data['refresh_token']
+        save_token(access_token, 'access_token.txt')
+        save_token(refresh_token, 'refresh_token.txt')
+        logger.info("✔ Access and refresh tokens saved.")
+        return access_token
+    except Exception as e:
+        logger.error("Failed to generate access token: %s", e)
+        raise
 
 
 def refresh_access_token():
@@ -68,14 +75,17 @@ def refresh_access_token():
         'Authorization': "Basic " + _get_base64_auth_string()
     }
 
-    response = requests.post(token_url, headers=headers, data=payload, verify=False)
-    response.raise_for_status()  # raises if status is not 2xx
-
-    data = response.json()
-    access_token = data['access_token']
-    save_token(access_token, 'access_token.txt')
-    print("✔ Access token refreshed and saved.")
-    return access_token
+    try:
+        response = requests.post(token_url, headers=headers, data=payload, verify=False)
+        response.raise_for_status()  # raises if status is not 2xx
+        data = response.json()
+        access_token = data['access_token']
+        save_token(access_token, 'access_token.txt')
+        logger.info("✔ Access token refreshed and saved.")
+        return access_token
+    except Exception as e:
+        logger.error("Failed to refresh access token: %s", e)
+        raise
 
 
 # === SWAT CAS Connection ===

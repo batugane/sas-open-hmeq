@@ -1,1 +1,8 @@
- 
+pandas==2.2.3 # create.demo.sas.com compatibility
+numpy==1.26.4 # create.demo.sas.com compatibility
+scikit-learn
+matplotlib
+pyyaml
+sasctl[all]
+swat
+python-dotenv
