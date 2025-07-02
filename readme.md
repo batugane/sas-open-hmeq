@@ -7,7 +7,7 @@ A modular Python pipeline for training, evaluating, and serializing a Gradient B
 ```
 hmeq_model_project/
 ├── .env                               # Env vars for OAuth2
-├── configs/                           # Pipeline parameters
+├── config/                           # Pipeline parameters
 │   └── params.yaml
 ├── data/                              # Raw data
 │   └── hmeq.csv
@@ -49,4 +49,4 @@ hmeq_model_project/
 
 ## Configuration
 
-Adjust `configs/params.yaml` or set env vars in `.env` for OAuth2 credentials, SAS host, certificate path, etc.
+Adjust `config/params.yaml` or set env vars in `.env` for OAuth2 credentials, SAS host, certificate path, etc.

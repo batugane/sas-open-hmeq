@@ -10,7 +10,7 @@ from src.import_model   import import_to_model_manager
 
 def main(skip_import: bool):
     # 1. load config
-    cfg = yaml.safe_load(open("configs/params.yaml"))
+    cfg = yaml.safe_load(open("config/params.yaml"))
 
     # 2. data
     df = load_data(cfg["data"]["path"])
