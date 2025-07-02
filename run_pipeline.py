@@ -43,7 +43,7 @@ def main(skip_import: bool):
         import_to_model_manager(
             input_data=df[preds],
             model_prefix=cfg["model"]["type"],
-            project="HMEQModels",
+            project="HMEQModelsBD",
             serialization_path=cfg["serialization"]["output_dir"],
             predict_method=[model.predict_proba, [int, int]],
             score_metrics=["EM_CLASSIFICATION","EM_EVENTPROBABILITY"],

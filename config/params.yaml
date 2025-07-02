@@ -15,5 +15,5 @@ preprocessing:
 serialization:
   output_dir: "data/hmeqModels/GradientBoosting"
 pzmm:
-  host: "demo.sas.com"
+  host: "create.demo.sas.com"
   protocol: "http"
