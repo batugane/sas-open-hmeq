@@ -88,6 +88,19 @@ def refresh_access_token():
         raise
 
 
+def get_token():
+    """
+    Get an access token by attempting to refresh first, then generating new if needed.
+    """
+    try:
+        token = refresh_access_token()
+        logger.info("✔ Access token refreshed.")
+    except Exception:
+        logger.warning("⚠️ Refresh failed; generating new access token.")
+        token = generate_access_token()
+    return token
+
+
 # === SWAT CAS Connection ===
 def connect_cas_https(access_token: str):
     return swat.CAS(
