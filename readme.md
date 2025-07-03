@@ -69,6 +69,35 @@ sas-open-hmeq/
   python run_pipeline.py
   ```
 
+## Scoring with MAS
+
+**Note:** Before using these scoring scripts, you must first publish your model to the destination: SAS Micro Analytic Service (maslocal).
+
+This project provides two command-line scripts for scoring data using a MAS-deployed model:
+
+### 1. score_with_mas_rest.py (Direct REST API)
+- Uses direct HTTP requests to the MAS REST API.
+- Good for debugging or when you need full control over the request/response.
+- Outputs a CSV with predictions and (optionally) input fields.
+
+**Example usage:**
+```bash
+python score_with_mas_rest.py -H https://create.demo.sas.com -m <module_name> -i data/hmeq_test.csv -o data/hmeq_scored.csv
+```
+
+### 2. score_with_mas_sasctl.py (sasctl Library, Recommended)
+- Uses the official `sasctl` Python library for a higher-level, more robust interface.
+- Handles authentication, session management, and error handling for you.
+- Outputs a CSV with both predictions and all original input fields for traceability.
+- Preferred for most users.
+
+**Example usage:**
+```bash
+python score_with_mas_sasctl.py -H https://create.demo.sas.com -m <module_name> -i data/hmeq_test.csv -o data/hmeq_scored.csv
+```
+
+**Note:** Both scripts require the same environment setup (see Installation above) and should be run from the project root directory.
+
 ## Configuration
 
 Adjust `config/params.yaml` for model parameters, data paths, and pipeline settings. Set OAuth2 credentials and SAS connection details in `.env` file (use `env.sample` as template).
