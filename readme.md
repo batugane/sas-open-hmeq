@@ -1,6 +1,17 @@
 # sas-open-hmeq
 
-A modular Python pipeline for training, evaluating, and serializing a Gradient Boosting classifier on the HMEQ dataset, with optional import into SAS Model Manager via OAuth2.
+A modular Python pipeline for training, evaluating, and serializing a Gradient Boosting classifier on the HMEQ dataset, with optional import into SAS Model Manager via OAuth2. Also includes a CAS (Cloud Analytics Services) demo for interactive analytics.
+
+## 📚 Quick Start Guides
+
+This project demonstrates **two different approaches** to SAS + Python integration:
+
+- **[SWAT Guide](SWAT_GUIDE.md)** - Interactive analytics with SAS Cloud Analytics Services (CAS)
+- **[SASCTL Guide](SASCTL_GUIDE.md)** - Production model deployment with SAS Model Manager
+
+**Choose your approach:**
+- **SWAT**: For real-time analytics, model prototyping, and cloud-based data processing
+- **SASCTL**: For production model deployment, version control, and enterprise scoring
 
 ## Features
 
@@ -9,6 +20,7 @@ A modular Python pipeline for training, evaluating, and serializing a Gradient B
 - **Error Handling**: Robust exception handling for production reliability
 - **Configuration Management**: YAML-based configuration for easy experimentation
 - **OAuth2 Integration**: Secure authentication with SAS Model Manager
+- **CAS Analytics Demo**: Interactive analytics using SAS Cloud Analytics Services with the HMEQ dataset
 
 ## Project Structure
 
@@ -30,6 +42,9 @@ sas-open-hmeq/
 │   └── utils/auth_utils.py           # OAuth2 helpers with logging
 ├── tests/                             # Unit tests (if present)
 ├── run_pipeline.py                    # Main pipeline orchestrator
+├── cas_hmeq_demo.py                   # CAS analytics demo with HMEQ dataset
+├── SWAT_GUIDE.md                      # Complete SWAT implementation guide
+├── SASCTL_GUIDE.md                    # Complete SASCTL implementation guide
 ├── requirements.txt                   # Python dependencies with versions
 └── .gitignore                         # Ignored files
 ```
@@ -60,6 +75,7 @@ sas-open-hmeq/
 
 ## Usage
 
+### Main Pipeline
 - **Dry run (serialize only):**
   ```bash
   python run_pipeline.py --skip-import
@@ -68,6 +84,19 @@ sas-open-hmeq/
   ```bash
   python run_pipeline.py
   ```
+
+### CAS Analytics Demo
+Run the interactive CAS demo with the HMEQ dataset:
+```bash
+python cas_hmeq_demo.py
+```
+
+This demo demonstrates:
+- Connecting to SAS Cloud Analytics Services (CAS) using OAuth2
+- Uploading the HMEQ dataset to CAS
+- Building a logistic regression model to predict loan defaults
+- Building a linear regression model to predict debt-to-income ratio
+- Extracting and interpreting model parameters
 
 ## Scoring with MAS
 
