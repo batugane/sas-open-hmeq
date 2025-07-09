@@ -6,12 +6,15 @@ A modular Python pipeline for training, evaluating, and serializing a Gradient B
 
 This project demonstrates **two different approaches** to SAS + Python integration:
 
-- **[SWAT Guide](SWAT_GUIDE.md)** - Interactive analytics with SAS Cloud Analytics Services (CAS)
-- **[SASCTL Guide](SASCTL_GUIDE.md)** - Production model deployment with SAS Model Manager
+### 🚀 **Start Here: Production-Ready Model Deployment**
+**[SASCTL Guide](docs/SASCTL_GUIDE.md)** - Build, deploy, and manage production models with SAS Model Manager
+*Perfect for: Enterprise deployment, version control, real-time scoring, production pipelines*
 
-**Choose your approach:**
-- **SWAT**: For real-time analytics, model prototyping, and cloud-based data processing
-- **SASCTL**: For production model deployment, version control, and enterprise scoring
+### 🔬 **Interactive Cloud Analytics**
+**[SWAT Guide](docs/SWAT_GUIDE.md)** - Interactive analytics with SAS Cloud Analytics Services (CAS)
+*Perfect for: Data exploration, rapid prototyping, cloud-based processing, real-time analytics*
+
+**💡 Recommendation**: Start with **SASCTL** if you want to deploy models to production. Use **SWAT** for interactive analytics and exploration.
 
 ## Features
 
@@ -40,11 +43,13 @@ sas-open-hmeq/
 │   ├── serialization.py              # Model serialization for SAS
 │   ├── import_model.py               # SAS Model Manager import with error handling
 │   └── utils/auth_utils.py           # OAuth2 helpers with logging
+├── docs/                              # Documentation and guides
+│   ├── SWAT_GUIDE.md                 # Complete SWAT implementation guide
+│   ├── SASCTL_GUIDE.md               # Complete SASCTL implementation guide
+│   └── images/                        # Screenshots and visual guides
 ├── tests/                             # Unit tests (if present)
 ├── run_pipeline.py                    # Main pipeline orchestrator
 ├── cas_hmeq_demo.py                   # CAS analytics demo with HMEQ dataset
-├── SWAT_GUIDE.md                      # Complete SWAT implementation guide
-├── SASCTL_GUIDE.md                    # Complete SASCTL implementation guide
 ├── requirements.txt                   # Python dependencies with versions
 └── .gitignore                         # Ignored files
 ```
