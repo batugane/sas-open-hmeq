@@ -374,6 +374,38 @@ if __name__ == '__main__':
     main()
 ```
 
+## Model Manager Dashboard
+
+After running the pipeline, your models will appear in SAS Model Manager. Here's what the project dashboard looks like:
+
+![Model Manager Dashboard](images/model_manager_models.png)
+
+*The HMEQModelsBD project showing deployed models in SAS Model Manager*
+
+## Project Overview
+
+The HMEQModelsBD project is visible in the project list, showing all available projects:
+
+![Project List](images/model_manager_projects.png)
+
+*Project list showing the HMEQModelsBD project among other available projects*
+
+## Model Details
+
+Click on any model to see detailed information including metadata, version, and status:
+
+![Model Details](images/model_manager_model.png)
+
+*Detailed view of a deployed model showing metadata, version, and status information*
+
+## Model Variables
+
+The model variables and their properties are clearly displayed in the Model Manager:
+
+![Model Variables](images/model_manager_variables.png)
+
+*Model variables showing input features and their properties for scoring*
+
 ## Key SASCTL Concepts
 
 ### Session Management
